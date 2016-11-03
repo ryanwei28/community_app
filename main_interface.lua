@@ -26,7 +26,8 @@ local prefecture
 local official_website
 local goblin
 local team 
-
+local marquee_bg
+local marquee
 --=======================================================================================
 --定義各種函式
 --=======================================================================================
@@ -51,6 +52,34 @@ init = function ( _parent  )
 
     team = display.newImageRect( _parent , "images/team.jpg", 620*WIDTH , 100*HEIGHT )
     team.x , team.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y*1.63
+
+    announcement:addEventListener( "tap", function (  )
+        composer.gotoScene( "announcement" )
+    end )
+
+    prefecture:addEventListener( "tap", function (  )
+        composer.gotoScene( "prefecture" )
+    end )
+
+    official_website:addEventListener( "tap", function (  )
+        composer.gotoScene( "official_website" )
+    end )
+
+    goblin:addEventListener( "tap", function (  )
+        composer.gotoScene( "goblin" )
+    end )
+
+    team:addEventListener( "tap", function (  )
+        composer.gotoScene( "team" )
+    end )
+
+    marquee_bg = display.newRect( _parent , _SCREEN.CENTER.X , _SCREEN.CENTER.Y *2, _SCREEN.W , 100*HEIGHT )
+    marquee_bg.anchorY = 1
+    marquee_bg:setFillColor( 0.9 , 0.1 , 0.1 )
+
+    marquee = display.newText( _parent , "官方跑馬燈公告  官方跑馬燈公告", _SCREEN.CENTER.X *2, _SCREEN.CENTER.Y*1.91 , font , 20 )
+    marquee.anchorX = 0
+    transition.to( marquee , {time = 5000 , x = -300 , iterations = -1 } )
 end
 
 

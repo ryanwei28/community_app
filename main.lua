@@ -33,7 +33,7 @@ widget = require("widget")
 --=======================================================================================
 _SCREEN = {
 	W = display.contentWidth ,
-	H = display.contentHeight
+	H = display.contentHeight 
 }
 _SCREEN.CENTER = {
 	X = display.contentCenterX ,
@@ -51,7 +51,7 @@ HEIGHT = _SCREEN.H/1136
 --=======================================================================================
 local init
 local loading
-local demo_scene = "signin"
+local demo_scene = "main_interface"
 --=======================================================================================
 --宣告與定義main()函式
 --=======================================================================================

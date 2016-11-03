@@ -16,10 +16,17 @@ local scene = composer.newScene( )
 --=======================================================================================
 local background
 local next
+local name
+local account
+local password
+local email
+
 --=======================================================================================
 --宣告各種函數函數
 --=======================================================================================
 local init
+local showTextField
+local hideTextField
 
 --=======================================================================================
 --定義各種函式
@@ -27,12 +34,39 @@ local init
 init = function ( _parent  )
     background = display.newImageRect( _parent , "images/bg.png", _SCREEN.W , _SCREEN.H )
     background.x , background.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y
+    background:setFillColor( 0.9 )
 
     next = display.newImageRect( _parent , "images/next.jpg", 450*WIDTH , 120*HEIGHT )
     next.x , next.y =  _SCREEN.CENTER.X , _SCREEN.CENTER.Y *1.6
+
+    local back = display.newText( _parent , "返回", _SCREEN.CENTER.X , _SCREEN.CENTER.Y*1.8 , font , 22 )
+    back:setFillColor( 0 )
+    back:addEventListener( "tap", function (  )
+        composer.gotoScene( "user_signin" )
+    end )
 end
 
+showTextField = function (  )
+    name = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.5 , 500*WIDTH , 100*HEIGHT )
+    account = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.75 , 500*WIDTH , 100*HEIGHT )
+    password = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y , 500*WIDTH , 100*HEIGHT )
+    email = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*1.25 , 500*WIDTH , 100*HEIGHT )
+    name.text = "姓名"
+    name.align = "center"
+    account.text = "帳號"
+    account.align = "center"
+    password.text = "密碼"
+    password.align = "center"
+    email.text = "Email"
+    email.align = "center"
+end
 
+hideTextField = function (  )
+    name:removeSelf( )
+    account:removeSelf( )
+    password:removeSelf( )
+    email:removeSelf( )
+end
 --=======================================================================================
 --Composer
 --=======================================================================================
@@ -59,6 +93,7 @@ function  scene:show( event)
     if( "will" == phase ) then
         print('scene:show will')
         --畫面即將要推上螢幕時要執行的程式碼寫在這邊
+        showTextField()
     elseif ( "did" == phase ) then
         print('scene:show did')
         --把畫面已經被推上螢幕後要執行的程式碼寫在這邊
@@ -80,7 +115,7 @@ function scene:hide( event )
         print('scene:hide will')
         --畫面即將移開螢幕時，要執行的程式碼
         --這邊需要停止音樂，釋放音樂記憶體，有timer的計時器也可以在此停止
-       
+       hideTextField()
     elseif ( "did" == phase ) then
         print('scene:hide did')
         --畫面已經移開螢幕時，要執行的程式碼
