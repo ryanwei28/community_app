@@ -15,6 +15,9 @@ local scene = composer.newScene( )
 --宣告各種變數
 --=======================================================================================
 local background
+local back 
+local mail 
+local signout
 
 --=======================================================================================
 --宣告各種函數函數
@@ -28,6 +31,18 @@ init = function ( _parent  )
     background = display.newImageRect( _parent , "images/bg.png", _SCREEN.W , _SCREEN.H )
     background.x , background.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y
 
+    mail = display.newImageRect( _parent , "images/mail.jpg", 600*WIDTH , 150*HEIGHT )
+    mail.x , mail.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.4
+
+    signout = display.newImageRect( _parent , "images/signout.jpg", 600*WIDTH , 150*HEIGHT )
+    signout.x , signout.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.7
+
+    back = display.newText( _parent , "返回", _SCREEN.CENTER.X*0.25 , _SCREEN.CENTER.Y*0.15 , font , 22 )
+    back:setFillColor( 0.1 )
+
+    back:addEventListener( "tap", function (  )
+        composer.gotoScene( "main_interface" )
+    end )
 end
 
 

@@ -15,7 +15,7 @@ local scene = composer.newScene( )
 --宣告各種變數
 --=======================================================================================
 local background
-
+local team
 --=======================================================================================
 --宣告各種函數函數
 --=======================================================================================
@@ -28,6 +28,12 @@ init = function ( _parent  )
     background = display.newImageRect( _parent , "images/bg.png", _SCREEN.W , _SCREEN.H )
     background.x , background.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y
 
+    team = display.newText( _parent , "製作團隊", _SCREEN.CENTER.X , _SCREEN.CENTER.Y , font , 50 )
+    team:setFillColor( 0.1 )
+
+    team:addEventListener( "tap", function (  )
+        composer.gotoScene( "main_interface" )
+    end )
 end
 
 

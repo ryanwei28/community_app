@@ -10,11 +10,17 @@
 --引入各種函式庫
 --=======================================================================================
 local scene = composer.newScene( )
+local url  = "https://www.google.com.tw/"
 
 --=======================================================================================
 --宣告各種變數
 --=======================================================================================
 local background
+local showWebView
+local close 
+local next 
+local previous
+local reorganize
 
 --=======================================================================================
 --宣告各種函數函數
@@ -27,7 +33,35 @@ local init
 init = function ( _parent  )
     background = display.newImageRect( _parent , "images/bg.png", _SCREEN.W , _SCREEN.H )
     background.x , background.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y
+    background:setFillColor( 0.7 )
 
+    close = display.newText( _parent , "關閉", _SCREEN.CENTER.X*0.2 , _SCREEN.CENTER.Y*0.1 , font , 20 )
+    previous = display.newText( _parent , "上一頁  |" , _SCREEN.CENTER.X*0.28 , _SCREEN.CENTER.Y*1.9 , font , 20 )
+    next = display.newText( _parent , "下一頁", _SCREEN.CENTER.X*0.74 , _SCREEN.CENTER.Y*1.9 , font , 20 )
+    reorganize = display.newText( _parent , "重新整理", _SCREEN.CENTER.X*1.7 , _SCREEN.CENTER.Y*1.9 , font , 20 )
+
+    close:addEventListener( "tap", function (  )
+        composer.gotoScene( "main_interface" )
+        webView:removeSelf( )
+    end )
+
+    previous:addEventListener( "tap", function ( )
+        webView:back()
+    end )
+
+    next:addEventListener( "tap", function (  )
+        webView:forward( )
+    end )
+
+    reorganize:addEventListener( "tap", function (  )
+        webView:reload( )
+    end )
+end
+
+showWebView = function (  )
+    webView = native.newWebView( _SCREEN.CENTER.X , _SCREEN.CENTER.Y  , _SCREEN.W , 900*HEIGHT )
+    webView:request(url)
+    webView.hasBackground = false
 end
 
 
@@ -57,6 +91,7 @@ function  scene:show( event)
     if( "will" == phase ) then
         print('scene:show will')
         --畫面即將要推上螢幕時要執行的程式碼寫在這邊
+        showWebView()
     elseif ( "did" == phase ) then
         print('scene:show did')
         --把畫面已經被推上螢幕後要執行的程式碼寫在這邊
