@@ -75,6 +75,7 @@ end
 showTextField = function (  )
     account = native.newTextField( _SCREEN.CENTER.X*1.2 , _SCREEN.CENTER.Y*0.2 , 400*WIDTH , 100*HEIGHT )
     password = native.newTextField( _SCREEN.CENTER.X*1.2 , _SCREEN.CENTER.Y*0.5 , 400*WIDTH , 100*HEIGHT )
+    password.isSecure = true
 end
 
 hideTextField = function (  )

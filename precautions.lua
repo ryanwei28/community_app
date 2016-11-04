@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------
---註冊頁面
+--注意事項
 -- 
 
 
@@ -10,23 +10,22 @@
 --引入各種函式庫
 --=======================================================================================
 local scene = composer.newScene( )
+local url  = "https://www.google.com.tw/"
 
 --=======================================================================================
 --宣告各種變數
 --=======================================================================================
 local background
-local next
-local name
-local account
-local password
-local email
+local showWebView
+local close 
+local next 
+local previous
+local reorganize
 
 --=======================================================================================
 --宣告各種函數函數
 --=======================================================================================
 local init
-local showTextField
-local hideTextField
 
 --=======================================================================================
 --定義各種函式
@@ -34,40 +33,38 @@ local hideTextField
 init = function ( _parent  )
     background = display.newImageRect( _parent , "images/bg.png", _SCREEN.W , _SCREEN.H )
     background.x , background.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y
-    background:setFillColor( 0.9 )
+    background:setFillColor( 0.7 )
 
-    next = display.newImageRect( _parent , "images/next.jpg", 450*WIDTH , 120*HEIGHT )
-    next.x , next.y =  _SCREEN.CENTER.X , _SCREEN.CENTER.Y *1.6
+    close = display.newText( _parent , "關閉", _SCREEN.CENTER.X*0.2 , _SCREEN.CENTER.Y*0.1 , font , 20 )
+    previous = display.newText( _parent , "上一頁  |" , _SCREEN.CENTER.X*0.28 , _SCREEN.CENTER.Y*1.9 , font , 20 )
+    next = display.newText( _parent , "下一頁", _SCREEN.CENTER.X*0.74 , _SCREEN.CENTER.Y*1.9 , font , 20 )
+    reorganize = display.newText( _parent , "重新整理", _SCREEN.CENTER.X*1.7 , _SCREEN.CENTER.Y*1.9 , font , 20 )
 
-    local back = display.newText( _parent , "返回", _SCREEN.CENTER.X , _SCREEN.CENTER.Y*1.8 , font , 22 )
-    back:setFillColor( 0 )
-    back:addEventListener( "tap", function (  )
-        composer.gotoScene( "user_signin" )
+    close:addEventListener( "tap", function (  )
+        composer.gotoScene( "signin" )
+        webView:removeSelf( )
+    end )
+
+    previous:addEventListener( "tap", function ( )
+        webView:back()
+    end )
+
+    next:addEventListener( "tap", function (  )
+        webView:forward( )
+    end )
+
+    reorganize:addEventListener( "tap", function (  )
+        webView:reload( )
     end )
 end
 
-showTextField = function (  )
-    name = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.5 , 500*WIDTH , 100*HEIGHT )
-    account = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*0.75 , 500*WIDTH , 100*HEIGHT )
-    password = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y , 500*WIDTH , 100*HEIGHT )
-    email = native.newTextField( _SCREEN.CENTER.X , _SCREEN.CENTER.Y*1.25 , 500*WIDTH , 100*HEIGHT )
-    name.text = "姓名"
-    name.align = "center"
-    account.text = "帳號"
-    account.align = "center"
-    password.text = "密碼"
-    password.align = "center"
-    password.isSecure = true
-    email.text = "Email"
-    email.align = "center"
+showWebView = function (  )
+    webView = native.newWebView( _SCREEN.CENTER.X , _SCREEN.CENTER.Y  , _SCREEN.W , 900*HEIGHT )
+    webView:request(url)
+    webView.hasBackground = false
 end
 
-hideTextField = function (  )
-    name:removeSelf( )
-    account:removeSelf( )
-    password:removeSelf( )
-    email:removeSelf( )
-end
+
 --=======================================================================================
 --Composer
 --=======================================================================================
@@ -94,7 +91,7 @@ function  scene:show( event)
     if( "will" == phase ) then
         print('scene:show will')
         --畫面即將要推上螢幕時要執行的程式碼寫在這邊
-        showTextField()
+        showWebView()
     elseif ( "did" == phase ) then
         print('scene:show did')
         --把畫面已經被推上螢幕後要執行的程式碼寫在這邊
@@ -116,7 +113,7 @@ function scene:hide( event )
         print('scene:hide will')
         --畫面即將移開螢幕時，要執行的程式碼
         --這邊需要停止音樂，釋放音樂記憶體，有timer的計時器也可以在此停止
-       hideTextField()
+       
     elseif ( "did" == phase ) then
         print('scene:hide did')
         --畫面已經移開螢幕時，要執行的程式碼

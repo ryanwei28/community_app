@@ -21,7 +21,7 @@ local logo
 local experience_signin
 local user_signin
 local fb_signin
-local provision
+local terms
 local precautions
 
 --=======================================================================================
@@ -48,8 +48,8 @@ init = function ( _parent  )
     fb_signin = display.newImageRect( _parent, "images/fb_signin.jpg" , 350*WIDTH , 100*HEIGHT )
     fb_signin.x , fb_signin.y = _SCREEN.CENTER.X , _SCREEN.CENTER.Y * 1.3
 
-    provision = display.newText( _parent , "服務條款", _SCREEN.CENTER.X * 0.7 , _SCREEN.CENTER.Y * 1.5 , native.systemFont , 20 )
-    provision:setFillColor( 0.7 )
+    terms = display.newText( _parent , "服務條款", _SCREEN.CENTER.X * 0.7 , _SCREEN.CENTER.Y * 1.5 , native.systemFont , 20 )
+    terms:setFillColor( 0.7 )
 
     precautions = display.newText( _parent , "注意事項", _SCREEN.CENTER.X *1.3 , _SCREEN.CENTER.Y*1.5 , native.systemFont , 20 )
     precautions:setFillColor( 0.7 )
@@ -64,6 +64,14 @@ init = function ( _parent  )
 
     fb_signin:addEventListener( "tap", function (  )
         composer.gotoScene( "fb_signin" )
+    end )
+
+    terms:addEventListener( "tap", function (  )
+        composer.gotoScene( "terms" )
+    end )
+
+    precautions:addEventListener( "tap", function (  )
+        composer.gotoScene( "precautions" )
     end )
 end
 

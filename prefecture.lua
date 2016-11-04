@@ -10,7 +10,6 @@
 --引入各種函式庫
 --=======================================================================================
 local scene = composer.newScene( )
-
 --=======================================================================================
 --宣告各種變數
 --=======================================================================================
@@ -43,6 +42,15 @@ init = function ( _parent  )
     back:addEventListener( "tap", function (  )
         composer.gotoScene( "main_interface" )
     end )
+
+    mail:addEventListener( "tap", function (  )
+        composer.gotoScene( "mail" )
+    end )
+
+    signout:addEventListener( "tap", function ( )
+        composer.gotoScene( "signin" )
+    end )
+
 end
 
 
